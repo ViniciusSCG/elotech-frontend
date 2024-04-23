@@ -27,15 +27,19 @@ import {
   updatePerson,
 } from "@/app/services/person.service";
 import { IPersonProps } from "../table-person";
+import { formatCpf } from "@/lib/utils";
 
 const FormSchema = z.object({
   name: z.string().nonempty({ message: "Nome Obrigatório." }),
   cpf: z
-    .string()
-    .nonempty({ message: "CPF Obrigatório." })
-    .refine((cpf) => cpf.length == 11, {
-      message: "CPF deve conter 11 caracteres.",
-    }),
+    .string({
+      required_error: "CPF Obrigatório.",
+    })
+    .refine((doc) => {
+      const replace = doc.replace(/\D/g, "");
+      return replace.length == 11;
+    }, "CPF deve conter 11 caracteres."),
+
   dataNascimento: z
     .string()
     .nonempty({ message: "Data de Nascimento Obrigatório." }),
@@ -163,11 +167,19 @@ export function FormPerson() {
             <FormField
               control={form.control}
               name="cpf"
-              render={({ field }) => (
+              render={({ field: { onChange, ...props } }) => (
                 <FormItem className="w-full md:w-56">
                   <FormLabel>CPF</FormLabel>
                   <FormControl>
-                    <Input placeholder="Digite o CPF da Pessoa" {...field} />
+                    <Input
+                      onChange={(e) => {
+                        const { value } = e.target;
+                        e.target.value = formatCpf(value);
+                        onChange(e);
+                      }}
+                      placeholder="CPF"
+                      {...props}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
