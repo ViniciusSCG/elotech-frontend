@@ -83,7 +83,7 @@ export function FormPerson() {
     try {
       const body = {
         name: data.name,
-        cpf: data.cpf,
+        cpf: data.cpf.replace(/\D/g, ""),
         birthdate: data.dataNascimento,
         contacts: data.contatos,
       };

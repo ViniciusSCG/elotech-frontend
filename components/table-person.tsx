@@ -109,7 +109,7 @@ export const columns = (
       const router = useRouter();
 
       const handleEditPerson = () => {
-        router.push(`/person/editPerson/${person.id}`);
+        router.push(`/edit-person/${person.id}`);
       };
 
       return (
@@ -129,16 +129,9 @@ export const columns = (
               >
                 Copiar CPF
               </DropdownMenuItem>
-              {/* <DropdownMenuSeparator /> */}
-              {/* <DropdownMenuItem
-                className="cursor-pointer"
-                onClick={handleEditPerson}
-              >
-                Editar Pessoa
-              </DropdownMenuItem> */}
               <DropdownMenuItem
                 className="cursor-pointer"
-                onClick={() => navigator.clipboard.writeText(person.cpf)}
+                onClick={() => handleEditPerson()}
               >
                 Editar Pessoa
               </DropdownMenuItem>
