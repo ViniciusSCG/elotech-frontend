@@ -45,6 +45,7 @@ const FormSchema = z.object({
         email: z.string().email({ message: "Email inválido." }),
         phone: z.string(),
         personId: z.number().optional(),
+        id: z.number().optional(),
       })
     )
     .nonempty({ message: "Contato Obrigatório." }),
@@ -116,10 +117,11 @@ export function FormPerson() {
           .toISOString()
           .split("T")[0],
         contatos: response.contacts.map(
-          (contact: { email: any; phone: any }) => ({
+          (contact: { email: any; phone: any; id: number }) => ({
             email: contact.email,
             phone: contact.phone,
             personId: Number(id),
+            id: contact.id,
           })
         ),
       });
