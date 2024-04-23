@@ -8,7 +8,7 @@ export default function Home() {
 
   useEffect(() => {
     const fetchPersons = async () => {
-      const response = await getPersonsPaginated(0, 10);
+      const response = await getPersonsPaginated(0, 900);
       setPersons(response.content);
     };
     fetchPersons();
